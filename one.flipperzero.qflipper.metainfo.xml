@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="windows-1252"?>
+<component type="desktop-application">
+  <id>one.flipperzero.qflipper</id>
+
+  <name>qFlipper</name>
+  <summary>Desktop application for updating Flipper Zero firmware via PC</summary>
+
+  <metadata_license>FSFAP</metadata_license>
+  <project_license>GPL-3.0-or-later</project_license>
+  <content_rating type="oars-1.1"/>
+  <url type="homepage">https://update.flipperzero.one</url>
+
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+    <control>touch</control>
+  </supports>
+
+  <description>
+    <p>
+      Graphical desktop application for updating Flipper Zero firmware via PC.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Update Flipper's firmware and supplemental data with a press of one button</li>
+      <li>Repair a broken fimware installation</li>
+      <li>Stream Flipper's display and control it remotely</li>
+      <li>Install firmware from a .dfu file</li>
+      <li>Backup and restore settings, progress and pairing data</li>
+      <li>Automatic self-update feature * Command line interface</li>
+    </ul>
+  </description>
+
+  <launchable type="desktop-id">qFlipper.desktop</launchable>
+  <screenshots>
+    <screenshot type="default">
+      <image>https://github.com/flipperdevices/qFlipper/raw/0.9.2/screenshot.png</image>
+    </screenshot>
+  </screenshots>
+</component>
