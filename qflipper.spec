@@ -1,15 +1,15 @@
 %undefine _debugsource_packages
 
-%global commit 8e43ad60f0a53fe771880aab4d225a57acc2cbbc
+%global commit 7b0839e178b98ba77f732fc679141a82a90c67dc
 # git log -1 --pretty=format:%ct
-%global timestamp 1684846555
+%global timestamp 1686221902
 %global nanopb_commit 13666952914f3cf43a70c6b9738a7dc0dd06a6dc
 
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Summary:	Desktop application for updating Flipper Zero firmware via PC
 Name:		qflipper
-Version:	1.3.1
+Version:	1.3.2
 Release:	1
 # qFlipper proper is GPLv3, the bundled nanopb library is zlib
 License:	GPLv3 and zlib
