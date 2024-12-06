@@ -10,7 +10,7 @@
 Summary:	Desktop application for updating Flipper Zero firmware via PC
 Name:		qflipper
 Version:	1.3.3
-Release:	1
+Release:	2
 # qFlipper proper is GPLv3, the bundled nanopb library is zlib
 License:	GPLv3 and zlib
 URL:		https://flipperzero.one/update
