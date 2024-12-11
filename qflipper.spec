@@ -1,38 +1,37 @@
 %undefine _debugsource_packages
 
-%global commit 7b0839e178b98ba77f732fc679141a82a90c67dc
 # git log -1 --pretty=format:%ct
 %global timestamp 1686221902
-%global nanopb_commit 13666952914f3cf43a70c6b9738a7dc0dd06a6dc
-
+%global commit 7b0839e178b98ba77f732fc679141a82a90c67dc
 %global shortcommit %(c=%{commit}; echo ${c:0:7})
 
 Summary:	Desktop application for updating Flipper Zero firmware via PC
 Name:		qflipper
 Version:	1.3.3
-Release:	2
-# qFlipper proper is GPLv3, the bundled nanopb library is zlib
-License:	GPLv3 and zlib
+Release:	3
+License:	GPLv3
+Group:		Development/Other
 URL:		https://flipperzero.one/update
 Source0:	https://github.com/flipperdevices/qFlipper/archive/%{version}/qFlipper-%{version}.tar.gz
-Source1:	https://github.com/nanopb/nanopb/archive/%{nanopb_commit}/nanopb-%{nanopb_commit}.tar.gz
 Source2:	42-flipperzero.rules
 Source3:	one.flipperzero.qflipper.metainfo.xml
+Patch0:		qflipper-1.3.3-unbundle_nanopb.patch
 
+BuildRequires:	cmake ninja
+BuildRequires:	cmake(nanopb)
+BuildRequires:	cmake(Qt6Core)
+BuildRequires:	cmake(Qt6Gui)
+BuildRequires:	cmake(Qt6Qml)
+BuildRequires:	cmake(Qt6Quick)
+BuildRequires:	cmake(Qt6Network)
+BuildRequires:	cmake(Qt6QuickControls2)
+BuildRequires:	cmake(Qt6SerialPort)
+BuildRequires:	cmake(Qt6Svg)
+BuildRequires:	cmake(Qt6Widgets)
 BuildRequires:	pkgconfig(appstream)
 BuildRequires:	pkgconfig(libusb-1.0)
-BuildRequires:	pkgconfig(Qt5QuickControls2)
-BuildRequires:	pkgconfig(Qt5SerialPort)
-BuildRequires:	pkgconfig(Qt5Svg)
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	qt5-linguist-tools
-BuildRequires:	qt5-qtbase-devel
-
-#Requires:	systemd-udev
-
-# nanopb needs to be compiled in, and needs to match the one used in the
-# firmware on the device side
-#Provides:	bundled(nanopb) = 0.4.5
+BuildRequires:	qt6-qttools-linguist-tools
 
 %description
 Desktop application for updating Flipper Zero firmware via PC.
@@ -46,7 +45,7 @@ Desktop application for updating Flipper Zero firmware via PC.
   *  Command line interface
 
 %files
-%license LICENSE 3rdparty/nanopb/LICENSE.txt
+%license LICENSE
 %doc README.md screenshot.png
 %{_bindir}/*
 %{_libdir}/qFlipper
@@ -55,15 +54,13 @@ Desktop application for updating Flipper Zero firmware via PC.
 %{_metainfodir}/one.flipperzero.qflipper.metainfo.xml
 %{_udevrulesdir}/42-flipperzero.rules
 
-#---------------------------------------------------------------------------
+#-----------------------------------------------------------------------
 
 %prep
-#autosetup -n qFlipper-%{version} -b1
-%autosetup -n qFlipper-%{version} -b1
+%autosetup -p1 -n qFlipper-%{version}
 
-# Use the correct nanopb snapshot
+# Use the system library
 rmdir 3rdparty/nanopb
-ln -s ../../nanopb-%{nanopb_commit} 3rdparty/nanopb
 
 # set the version
 sed -i qflipper_common.pri \
@@ -76,18 +73,21 @@ sed -e 's:/lib/:/%{_lib}/:' \
 	-i backend/applicationbackend.cpp plugins/flipperproto0/flipperproto0.pro
 
 %build
-%qmake_qt5 \
+%set_build_flags
+mkdir -p build && cd build
+qmake-qt6 \
 	PREFIX=%{buildroot}%{_prefix} \
-	CONFIG+=qtquickcompiler \
-	DEFINES+=DISABLE_APPLICATION_UPDATES
+	CONFIG+="qtquickcompiler" \
+	DEFINES+=DISABLE_APPLICATION_UPDATES \
+	"../qFlipper.pro"
 %make_build
 
 %install
-%make_install
+%make_install -C build
 
 # udev rules
 install -Dpm0644 -t %{buildroot}%{_udevrulesdir} %SOURCE2
 
 # appdata file
 install -Dpm0644 -t %{buildroot}%{_metainfodir} %SOURCE3
-
+ 
