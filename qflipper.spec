@@ -19,6 +19,7 @@ Patch0:		qflipper-1.3.3-unbundle_nanopb.patch
 
 BuildRequires:	cmake ninja
 BuildRequires:	cmake(nanopb)
+BuildRequires:	cmake(Qt6Concurrent)
 BuildRequires:	cmake(Qt6Core)
 BuildRequires:	cmake(Qt6Core5Compat)
 BuildRequires:	cmake(Qt6Gui)
