@@ -1,0 +1,56 @@
+--- a/cli/cli.pro
++++ b/cli/cli.pro
+@@ -31,7 +31,7 @@ unix|win32 {
+ 
+     contains(CONFIG, static): LIBS += \
+         -L$$OUT_PWD/../plugins/ -lflipperproto0 \
+-        -L$$OUT_PWD/../3rdparty/ -l3rdparty
++	-lprotobuf-nanopb
+ }
+ 
+ win32 {
+--- a/plugins/flipperproto0/flipperproto0.pro
++++ b/plugins/flipperproto0/flipperproto0.pro
+@@ -13,7 +13,6 @@ CONFIG += plugin c++11
+ VERSION = 0.0.0
+ 
+ INCLUDEPATH += $$PWD/../protobufinterface \
+-    $$PWD/../../3rdparty/nanopb
+ 
+ HEADERS += \
+     guirequest.h \
+@@ -65,7 +64,7 @@ SOURCES += \
+     systemresponse.cpp
+ 
+ unix|win32 {
+-    LIBS += -L$$OUT_PWD/../../3rdparty/ -l3rdparty
++    LIBS += -lprotobuf-nanopb
+ }
+ 
+ DEFINES += PB_ENABLE_MALLOC
+--- a/qflipper_common.pri
++++ b/qflipper_common.pri
+@@ -5,6 +5,7 @@ equals(QT_MAJOR_VERSION, 6): QT += core5
+     DEFINES += USB_BACKEND_LIBUSB
+     CONFIG += link_pkgconfig
+     PKGCONFIG += libusb-1.0 zlib
++    INCLUDEPATH += /usr/include/nanopb/
+ 
+     isEmpty(PREFIX): PREFIX = /usr
+ 
+--- a/qFlipper.pro
++++ b/qFlipper.pro
+@@ -1,7 +1,6 @@
+ TEMPLATE = subdirs
+ 
+ SUBDIRS += \
+-    3rdparty \
+     application \
+     backend \
+     dfu \
+@@ -11,4 +10,3 @@ SUBDIRS += \
+ backend.depends = dfu plugins
+ application.depends = backend
+ cli.depends = backend
+-plugins.depends = 3rdparty
+
