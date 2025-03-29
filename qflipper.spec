@@ -15,9 +15,10 @@ URL:		https://flipperzero.one/update
 Source0:	https://github.com/flipperdevices/qFlipper/archive/%{version}/qFlipper-%{version}.tar.gz
 Source2:	42-flipperzero.rules
 Source3:	one.flipperzero.qflipper.metainfo.xml
-Patch0:		qflipper-1.3.3-unbundle_nanopb.patch
+#Patch0:		qflipper-1.3.3-unbundle_nanopb.patch
 
 BuildRequires:	cmake ninja
+BuildRequires:	cmake(FastFloat)
 BuildRequires:	cmake(nanopb)
 BuildRequires:	cmake(Qt6Concurrent)
 BuildRequires:	cmake(Qt6Core)
@@ -29,6 +30,7 @@ BuildRequires:	cmake(Qt6Network)
 BuildRequires:	cmake(Qt6QuickControls2)
 BuildRequires:	cmake(Qt6SerialPort)
 BuildRequires:	cmake(Qt6Svg)
+BuildRequires:	cmake(Qt6UiPlugin)
 BuildRequires:	cmake(Qt6Widgets)
 BuildRequires:	pkgconfig(appstream)
 BuildRequires:	pkgconfig(libusb-1.0)
