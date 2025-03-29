@@ -64,7 +64,7 @@ Desktop application for updating Flipper Zero firmware via PC.
 %autosetup -p1 -n qFlipper-%{version}
 
 # Use the system library
-rmdir 3rdparty/nanopb
+#rmdir 3rdparty/nanopb
 
 # set the version
 sed -i qflipper_common.pri \
