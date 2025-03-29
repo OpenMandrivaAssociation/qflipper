@@ -15,7 +15,7 @@ URL:		https://flipperzero.one/update
 Source0:	https://github.com/flipperdevices/qFlipper/archive/%{version}/qFlipper-%{version}.tar.gz
 Source2:	42-flipperzero.rules
 Source3:	one.flipperzero.qflipper.metainfo.xml
-#Patch0:		qflipper-1.3.3-unbundle_nanopb.patch
+Patch0:		qflipper-1.3.3-unbundle_nanopb.patch
 
 BuildRequires:	cmake ninja
 BuildRequires:	cmake(FastFloat)
@@ -64,7 +64,7 @@ Desktop application for updating Flipper Zero firmware via PC.
 %autosetup -p1 -n qFlipper-%{version}
 
 # Use the system library
-#rmdir 3rdparty/nanopb
+rmdir 3rdparty/nanopb
 
 # set the version
 sed -i qflipper_common.pri \
